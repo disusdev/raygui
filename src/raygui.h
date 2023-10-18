@@ -3253,7 +3253,11 @@ int GuiListViewEx(Rectangle bounds, const char **text, int count, int *scrollInd
                     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                     {
                         if (itemSelected == (startIndex + i)) itemSelected = -1;
-                        else itemSelected = startIndex + i;
+                        else
+                        {
+                            itemSelected = startIndex + i;
+                            result = true;
+                        }
                     }
                     break;
                 }
@@ -3352,7 +3356,7 @@ int GuiListViewEx(Rectangle bounds, const char **text, int count, int *scrollInd
 
 // Color Panel control
 int GuiColorPanel(Rectangle bounds, const char *text, Color *color)
-{
+{(void)text;
     int result = 0;
     GuiState state = guiState;
     Vector2 pickerSelector = { 0 };
@@ -3434,7 +3438,7 @@ int GuiColorPanel(Rectangle bounds, const char *text, Color *color)
 // Color Bar Alpha control
 // NOTE: Returns alpha value normalized [0..1]
 int GuiColorBarAlpha(Rectangle bounds, const char *text, float *alpha)
-{
+{(void)text;
     #if !defined(RAYGUI_COLORBARALPHA_CHECKED_SIZE)
         #define RAYGUI_COLORBARALPHA_CHECKED_SIZE   10
     #endif
@@ -3524,7 +3528,7 @@ int GuiColorBarAlpha(Rectangle bounds, const char *text, float *alpha)
 //      Color GuiColorBarValue() [BLACK->color], HSV/HSL
 //      float GuiColorBarLuminance() [BLACK->WHITE]
 int GuiColorBarHue(Rectangle bounds, const char *text, float *hue)
-{
+{(void)text;
     int result = 0;
     GuiState state = guiState;
     Rectangle selector = { (float)bounds.x - GuiGetStyle(COLORPICKER, HUEBAR_SELECTOR_OVERFLOW), (float)bounds.y + (*hue)/360.0f*bounds.height - GuiGetStyle(COLORPICKER, HUEBAR_SELECTOR_HEIGHT)/2, (float)bounds.width + GuiGetStyle(COLORPICKER, HUEBAR_SELECTOR_OVERFLOW)*2, (float)GuiGetStyle(COLORPICKER, HUEBAR_SELECTOR_HEIGHT) };
@@ -3614,7 +3618,7 @@ int GuiColorBarHue(Rectangle bounds, const char *text, float *hue)
 //      float GuiColorBarHue(Rectangle bounds, float value)
 // NOTE: bounds define GuiColorPanel() size
 int GuiColorPicker(Rectangle bounds, const char *text, Color *color)
-{
+{(void)text;
     int result = 0;
 
     Color temp = { 200, 0, 0, 255 };
@@ -3645,7 +3649,7 @@ int GuiColorPicker(Rectangle bounds, const char *text, Color *color)
 //      float GuiColorBarHue(Rectangle bounds, float value)
 // NOTE: bounds define GuiColorPanelHSV() size
 int GuiColorPickerHSV(Rectangle bounds, const char *text, Vector3 *colorHsv)
-{
+{(void)text;
     int result = 0;
 
     Vector3 tempHsv = { 0 };
@@ -3669,7 +3673,7 @@ int GuiColorPickerHSV(Rectangle bounds, const char *text, Vector3 *colorHsv)
 // Color Panel control, returns HSV color value in *colorHsv.
 // Used by GuiColorPickerHSV()
 int GuiColorPanelHSV(Rectangle bounds, const char *text, Vector3 *colorHsv)
-{
+{(void)text;
     int result = 0;
     GuiState state = guiState;
     Vector2 pickerSelector = { 0 };
@@ -3884,7 +3888,7 @@ int GuiTextInputBox(Rectangle bounds, const char *title, const char *message, co
 // About drawing lines at subpixel spacing, simple put, not easy solution:
 // https://stackoverflow.com/questions/4435450/2d-opengl-drawing-lines-that-dont-exactly-fit-pixel-raster
 int GuiGrid(Rectangle bounds, const char *text, float spacing, int subdivs, Vector2 *mouseCell)
-{
+{(void)text;
     // Grid lines alpha amount
     #if !defined(RAYGUI_GRID_ALPHA)
         #define RAYGUI_GRID_ALPHA    0.15f
@@ -4324,7 +4328,7 @@ void GuiSetIconScale(int scale)
 // Load style from memory
 // WARNING: Binary files only
 static void GuiLoadStyleFromMemory(const unsigned char *fileData, int dataSize)
-{
+{(void)dataSize;
     unsigned char *fileDataPtr = (unsigned char *)fileData;
 
     char signature[5] = { 0 };
@@ -4681,7 +4685,7 @@ const char **GetTextLines(const char *text, int *count)
     int textSize = (int)strlen(text);
 
     lines[0] = text;
-    int len = 0;
+    // int len = 0;
     *count = 1;
     //int lineSize = 0;   // Stores current line size, not returned
 
@@ -4692,10 +4696,10 @@ const char **GetTextLines(const char *text, int *count)
             //lineSize = len;
             k++;
             lines[k] = &text[i + 1];     // WARNING: next value is valid?
-            len = 0;
+            //len = 0;
             *count += 1;
         }
-        else len++;
+        //else len++;
     }
 
     //lines[*count - 1].size = len;
