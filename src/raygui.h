@@ -2043,6 +2043,7 @@ int GuiToggle(Rectangle bounds, const char *text, bool *active)
             {
                 state = STATE_NORMAL;
                 *active = !(*active);
+                result = 1;
             }
             else state = STATE_FOCUSED;
         }
